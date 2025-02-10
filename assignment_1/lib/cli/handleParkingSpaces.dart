@@ -3,6 +3,7 @@ import '../repositories/ParkingSpaceRepository.dart';
 import '../models/ParkingSpace.dart';
 
 void handleParkingSpaces(ParkingSpaceRepository repo) {
+  
   while (true) {
     print('Du har valt att hantera Parkeringsplatser.');
     print('1. Skapa ny parkeringsplats');
@@ -22,8 +23,13 @@ void handleParkingSpaces(ParkingSpaceRepository repo) {
         var adress = stdin.readLineSync()?.trim() ?? '';
         print('Ange pris per timme:');
         var prisPerTimme = double.tryParse(stdin.readLineSync()?.trim() ?? '') ?? 0.0;
+        var parkingSpace = ParkingSpace(id: id, adress: adress, prisPerTimme: prisPerTimme);
+        if (parkingSpace.isValid()) {
         repo.add(ParkingSpace(id: id, adress: adress, prisPerTimme: prisPerTimme));
         print('Parkeringsplats skapad!');
+        } else {
+          print('Ogiltig parkeringsplats.');
+        }
         break;
       case '2':
         for (var space in repo.getAll()) {

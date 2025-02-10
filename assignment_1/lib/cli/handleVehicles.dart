@@ -26,9 +26,14 @@ void handleVehicles(VehicleRepository repo) {
         print('Ange ownerns personnummer:');
         var ownerPersonnummer = stdin.readLineSync()?.trim() ?? '';
         var owner = Person(namn: ownerNamn, personnummer: ownerPersonnummer);
-        repo.add(Vehicle(
-            registreringsnummer: registreringsnummer, typ: typ, owner: owner));
-        print('Fordon skapat!');
+        var vehicle = Vehicle(
+            registreringsnummer: registreringsnummer, typ: typ, owner: owner);
+        if(vehicle.isValid()){
+          repo.add(vehicle);
+          print('Fordon skapat!');
+        } else {
+          print('Ogiltigt fordon.');
+        }
         break;
       case '2':
         for (var vehicle in repo.getAll()) {
