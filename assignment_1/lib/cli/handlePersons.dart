@@ -23,7 +23,7 @@ void handlePersons(PersonRepository repo) {
           stdout.write('Personnummer: ');
           String? personnummer = stdin.readLineSync();
           if (name != null && personnummer != null) {
-            int newId = repo.getAll().length + 1; // Generate a new ID
+            
             repo.add(Person(namn: name, personnummer: personnummer));
             print('Person skapad.');
           }

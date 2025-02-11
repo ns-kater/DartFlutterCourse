@@ -40,7 +40,8 @@ class ParkingSpaceRepository extends Repository<ParkingSpace> {
     }
   }
 
+  @override
   void delete(int id) {
-    _parkingSpaces.removeWhere((ps) => ps.id == id);
+    _parkingSpaces.removeAt(id);
   }
 }
