@@ -34,7 +34,7 @@ class ParkingSpaceRepository extends Repository<ParkingSpace> {
   @override
   void update(ParkingSpace updatedParkingSpace, int id) {
     if (updatedParkingSpace.isValid()) {
-      _parkingSpaces[_parkingSpaces.indexWhere((ps) => ps.id == id)] = updatedParkingSpace;
+      _parkingSpaces[id] = updatedParkingSpace;
     } else {
       throw Exception('Invalid parking space data.');
     }

@@ -23,6 +23,7 @@ void handlePersons(PersonRepository repo) {
           stdout.write('Personnummer: ');
           String? personnummer = stdin.readLineSync();
           if (name != null && personnummer != null) {
+            int newId = repo.getAll().length + 1; // Generate a new ID
             repo.add(Person(namn: name, personnummer: personnummer));
             print('Person skapad.');
           }
@@ -47,23 +48,19 @@ void handlePersons(PersonRepository repo) {
           }
           break;
         case '4':
-          stdout.write('Personnummer att uppdatera: ');
-          String? personnummer = stdin.readLineSync();
-          if (personnummer != null) {
-            try {
-              Person person = repo.getById(int.parse(personnummer));
-              stdout.write('Nytt namn: ');
-              String? newName = stdin.readLineSync();
-              if (newName != null) {
-                person = Person(namn: newName, personnummer: personnummer);
-                repo.update(person, person as int);
-                print('Person uppdaterad.');
-              }
-            } catch (e) {
-              print('Person hittades inte.');
-            }
-          }
-          break;
+        print('Ange ID för personen som ska uppdateras:');
+        var id = int.tryParse(stdin.readLineSync()?.trim() ?? '') ?? 0;
+        if (id >= 0 && id < repo.getAll().length) {
+          print('Ange nytt namn:');
+          var namn = stdin.readLineSync()?.trim() ?? '';
+          print('Ange nytt personnummer:');
+          var personnummer = stdin.readLineSync()?.trim() ?? '';
+          repo.update(Person(namn: namn, personnummer: personnummer), id);
+          print('Person uppdaterad!');
+        } else {
+          print('Ogiltigt ID.');
+        }
+        break;
         case '5':
           stdout.write('Personnummer att ta bort: ');
           String? personnummer = stdin.readLineSync();
@@ -83,3 +80,4 @@ void handlePersons(PersonRepository repo) {
     }
   }
 }
+

@@ -2,7 +2,7 @@ import '../models/Person.dart';
 import 'repository.dart';
 
 class PersonRepository extends Repository<Person> {
-  final List<Person> _persons = [];
+   List<Person> _persons = [];
   static final PersonRepository _instance = PersonRepository._internal();
 
   factory PersonRepository() {
@@ -11,17 +11,14 @@ class PersonRepository extends Repository<Person> {
 
   PersonRepository._internal();
 
-  @override
-  void add(Person item) {
-    if (item.isValid()) {
-      _persons.add(item);
+  void add(Person person) {
+    if (person.isValid()) {
+      _persons.add(person);
     } else {
       throw Exception('Invalid person data. Please Check you data it should not be null and personnummer should be exactly 10 digits');
     }
   }
-
-  @override
-  List<Person> getAll() {
+List<Person> getAll() {
     return _persons;
   }
 
@@ -31,10 +28,10 @@ class PersonRepository extends Repository<Person> {
         orElse: () => throw Exception('Person not found.'));
   }
 
-  @override
-  void update(Person updatedPerson, int index) {
-    if (updatedPerson.isValid()) {
-      _persons[index] = updatedPerson;
+    @override
+  void update(Person item, int id) {
+    if (item.isValid()) {
+     _persons[id] = item;
     } else {
       throw Exception('Invalid person data.');
     }
@@ -45,7 +42,7 @@ class PersonRepository extends Repository<Person> {
     _persons.removeWhere((p) => p.personnummer == personnummer.toString());
   }
 
-  List<Person> searchByName(String namn) {
-    return _persons.where((p) => p.namn.contains(namn)).toList();
+  List<Person> searchByName(String name) {
+    return _persons.where((p) => p.namn.contains(name)).toList();
   }
 }
